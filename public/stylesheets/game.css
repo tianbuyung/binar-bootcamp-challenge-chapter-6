@@ -1,0 +1,95 @@
+body {
+  background-color: #9c835f;
+  font-family: "Open Sans", sans-serif;
+}
+
+.logo {
+  height: 72px;
+  width: 72px;
+}
+
+.game-title {
+  color: #f9b23d;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.identity {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.refresh-button {
+  width: 75px;
+  height: 75px;
+}
+
+.game-result {
+  color: #bd0000;
+  font-size: 144px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.result-win {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 271px;
+  height: 166px;
+
+  background: #4c9654;
+  border-radius: 10px;
+  transform: rotate(-20deg) !important;
+
+  font-size: 38px;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  color: #ffffff;
+}
+
+.result-draw {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 271px;
+  height: 166px;
+
+  background: #035b0c;
+  border-radius: 10px;
+  transform: rotate(-20deg) !important;
+
+  font-size: 38px;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  color: #ffffff;
+}
+
+.selections:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.selected {
+  background-color: #c4c4c4;
+  border-radius: 30px;
+}
+
+.rock-selected {
+  width: 8rem;
+  height: 5.75rem;
+}
+
+.paper-selected {
+  width: 7.188rem;
+  height: 9.375rem;
+}
+
+.scissors-selected {
+  width: 8.375rem;
+  height: 10rem;
+}

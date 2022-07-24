@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- General Head -->
+    <%- include('../partials/head'); %>
+        <!-- Internal icon -->
+        <link rel="icon" type="image/x-icon" href="../images/game/logo 1.svg">
+        <!-- Internal CSS -->
+        <link rel="stylesheet" href="../stylesheets/game.css">
+</head>
+
+<body>
+    <% if (gameStatus==true) { %>
+        <header>
+            <div class="container-fluid pt-3 pb-5">
+                <div class="row">
+                    <div class="d-inline-flex align-items-center">
+                        <div>
+                            <a href="/" class="h1 p-4"><img src="../images/game/back-button.svg" class="img-fluid"
+                                    alt="back button"></a>
+                        </div>
+                        <div>
+                            <img src="../images/game/logo 1.png" class="img-fluid logo" alt="logo batu gunting kertas">
+                        </div>
+                        <div>
+                            <h1 class="h1 text-uppercase m-1 p-3 game-title">rock paper scissors</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="container pt-3">
+                <div class="row">
+                    <div class="col d-flex align-items-center flex-column">
+                        <h3 class="text-uppercase pb-3 identity">player 1</h3>
+                        <div class="d-flex flex-column" id="userChoice">
+                            <div class="d-flex align-items-center justify-content-center p-3 m-3 selections"
+                                id="userRock">
+                                <img src="../images/game/batu.png" class="rock-selected" alt="rock">
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center p-3 m-3 selections"
+                                id="userPaper">
+                                <img src="../images/game/kertas.png" class="paper-selected" alt="paper">
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center p-3 m-3 selections"
+                                id="userScissors">
+                                <img src="../images/game/gunting.png" class="scissors-selected" alt="scissors">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col align-items-center justify-content-center position-relative">
+                        <div class="align-self-center position-absolute top-50 start-50 translate-middle">
+                            <p class="game-result" id="gameResult">vs</p>
+                        </div>
+                    </div>
+                    <div class="col d-flex align-items-center flex-column">
+                        <h3 class="text-uppercase pb-3 identity">com</h3>
+                        <div class="d-flex flex-column" id="comChoice">
+                            <div class="d-flex align-items-center justify-content-center p-3 m-3" id="comRock">
+                                <img src="../images/game/batu.png" class="rock-selected" alt="rock">
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center p-3 m-3" id="comPaper">
+                                <img src="../images/game/kertas.png" class="paper-selected" alt="paper">
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center p-3 m-3" id="comScissors">
+                                <img src="../images/game/gunting.png" class="scissors-selected" alt="scissors">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-flex align-items-center justify-content-center selections">
+                        <img src="../images/game/refresh.png" class="img-fluid refresh-button" alt="refresh"
+                            id="refreshButton">
+                    </div>
+                </div>
+            </div>
+        </main>
+        <% } else { %>
+            <%- include('../partials/error'); %>
+                <div class="text-center">
+                    <a href="/users/login" class="btn btn-primary">Please Sign in</a>
+                </div>
+                <% } %>
+
+                    <!-- General Javascript -->
+                    <%- include('../partials/script') %>
+                        <!-- Internal Javascript -->
+                        <script type="text/javascript" src="../javascripts/game.js"></script>
+</body>
+
+</html>

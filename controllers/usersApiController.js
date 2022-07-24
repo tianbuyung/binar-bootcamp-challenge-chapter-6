@@ -1,7 +1,7 @@
 const Model = require("../app-db/models");
 const { UserGame, UserGameBiodata, UserGameHistory } = Model;
 
-class UserGameController {
+class UsersApiController {
   constructor() {}
   createUserGame(req, res) {
     UserGame.create({
@@ -97,4 +97,4 @@ class UserGameController {
   }
 }
 
-module.exports = UserGameController;
+module.exports = UsersApiController;

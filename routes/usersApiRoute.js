@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const UserGame = require("../controllers/UserGameController");
+const UserGame = require("../controllers/usersApiController");
 const userGame = new UserGame();
 
 /* Create a new user. */
