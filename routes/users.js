@@ -7,5 +7,7 @@ const userGame = new UserGame();
 router.post("/", userGame.createUserGame);
 /* GET users listing. */
 router.get("/", userGame.getAllUsers);
+/* GET users listing. */
+router.get("/:id", userGame.getUserById);
 
 module.exports = router;

@@ -1,5 +1,5 @@
 const Model = require("../app-db/models");
-const { UserGame } = Model;
+const { UserGame, UserGameBiodata, UserGameHistory } = Model;
 
 class UserGameController {
   constructor() {}
@@ -9,7 +9,14 @@ class UserGameController {
       password: req.body.password,
       isAdmin: req.body.isAdmin,
     })
-      .then(() => res.json({ message: "Succesfully created new user" }))
+      .then((data) => {
+        UserGameBiodata.create({
+          userId: data.id,
+        });
+      })
+      .then(() => {
+        res.json({ message: "Succesfully created new user" });
+      })
       .catch((err) => {
         res.status(400).json({
           message: err.message,
@@ -17,7 +24,35 @@ class UserGameController {
       });
   }
   getAllUsers(req, res) {
-    UserGame.findAll()
+    UserGame.findAll({
+      include: [
+        {
+          model: UserGameBiodata,
+          as: "biodata",
+          attributes: ["userId", "firstName", "lastName"],
+        },
+      ],
+    })
+      .then((data) =>
+        res.json({ message: "Succesfully get all users data", data })
+      )
+      .catch((err) => {
+        res.status(400).json({
+          message: err.message,
+        });
+      });
+  }
+  getUserById(req, res) {
+    UserGame.findOne({
+      include: [
+        {
+          model: UserGameBiodata,
+          as: "biodata",
+          attributes: ["userId", "firstName", "lastName"],
+        },
+      ],
+      where: { id: req.params.id },
+    })
       .then((data) =>
         res.json({ message: "Succesfully get all users data", data })
       )

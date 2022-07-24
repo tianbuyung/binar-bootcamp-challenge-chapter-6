@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class UserGame extends Model {
+  class UserGameHistory extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,28 +9,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.UserGame.hasOne(models.UserGameBiodata, {
+      models.UserGameHistory.belongsTo(models.UserGame, {
         foreignKey: "user_id",
-        as: "biodata",
-      });
-      models.UserGame.hasMany(models.UserGameHistory, {
-        foreignKey: "user_id",
+        onDelete: "CASCADE",
       });
     }
   }
-  UserGame.init(
+  UserGameHistory.init(
     {
-      id: {
-        type: DataTypes.UUID,
-        primaryKey: true,
-        defaultValue: DataTypes.UUIDV4,
-      },
-      username: DataTypes.STRING,
-      password: DataTypes.STRING,
-      isAdmin: {
-        type: DataTypes.BOOLEAN,
-        field: "is_admin",
-      },
+      userId: { type: DataTypes.UUID, field: "user_id" },
+      isWin: { type: DataTypes.STRING, field: "is_win" },
       deletedAt: {
         type: DataTypes.DATE,
         field: "deleted_at",
@@ -52,9 +40,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "UserGame",
-      tableName: "user_games",
+      modelName: "UserGameHistory",
+      tableName: "user_game_histories",
     }
   );
-  return UserGame;
+  return UserGameHistory;
 };
