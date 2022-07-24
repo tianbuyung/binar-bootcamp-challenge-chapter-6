@@ -15,7 +15,7 @@ class UserGameController {
         });
       })
       .then(() => {
-        res.json({ message: "Succesfully created new user" });
+        res.status(200).json({ message: "Successfully created new user" });
       })
       .catch((err) => {
         res.status(400).json({
@@ -34,7 +34,9 @@ class UserGameController {
       ],
     })
       .then((data) =>
-        res.json({ message: "Succesfully get all users data", data })
+        res
+          .status(200)
+          .json({ message: "Successfully read all users data", data })
       )
       .catch((err) => {
         res.status(400).json({
@@ -54,7 +56,38 @@ class UserGameController {
       where: { id: req.params.id },
     })
       .then((data) =>
-        res.json({ message: "Succesfully get all users data", data })
+        res
+          .status(200)
+          .json({ message: "Successfully read detail a user", data })
+      )
+      .catch((err) => {
+        res.status(400).json({
+          message: err.message,
+        });
+      });
+  }
+  updateUserById(req, res) {
+    UserGame.update(
+      {
+        username: req.body.username,
+        isAdmin: req.body.isAdmin,
+        updatedAt: new Date().getTime(),
+      },
+      { where: { id: req.params.id } }
+    )
+      .then((data) =>
+        res.status(200).json({ message: "Successfully updated user data" })
+      )
+      .catch((err) => {
+        res.status(400).json({
+          message: err.message,
+        });
+      });
+  }
+  deleteUserById(req, res) {
+    UserGame.destroy({ where: { id: req.params.id } })
+      .then(() =>
+        res.status(200).json({ message: "Successfully deleted user data" })
       )
       .catch((err) => {
         res.status(400).json({

@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       models.UserGameHistory.belongsTo(models.UserGame, {
         foreignKey: "user_id",
         onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       });
     }
   }
@@ -29,12 +30,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       createdAt: {
         type: DataTypes.DATE,
-        defaultValue: new Date(),
+        defaultValue: new Date().getTime(),
         field: "created_at",
       },
       updatedAt: {
         type: DataTypes.DATE,
-        defaultValue: new Date(),
+        defaultValue: new Date().getTime(),
         field: "updated_at",
       },
     },
@@ -42,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "UserGameHistory",
       tableName: "user_game_histories",
+      paranoid: true,
     }
   );
   return UserGameHistory;

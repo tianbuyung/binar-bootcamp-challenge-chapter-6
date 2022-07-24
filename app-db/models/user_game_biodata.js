@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "user_id",
         as: "biodata",
         onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       });
     }
   }
@@ -34,12 +35,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       createdAt: {
         type: DataTypes.DATE,
-        defaultValue: new Date(),
+        defaultValue: new Date().getTime(),
         field: "created_at",
       },
       updatedAt: {
         type: DataTypes.DATE,
-        defaultValue: new Date(),
+        defaultValue: new Date().getTime(),
         field: "updated_at",
       },
     },
@@ -47,6 +48,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "UserGameBiodata",
       tableName: "user_game_biodata",
+      paranoid: true,
     }
   );
   return UserGameBiodata;

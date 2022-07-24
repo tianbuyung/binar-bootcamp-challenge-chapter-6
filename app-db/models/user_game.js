@@ -12,9 +12,13 @@ module.exports = (sequelize, DataTypes) => {
       models.UserGame.hasOne(models.UserGameBiodata, {
         foreignKey: "user_id",
         as: "biodata",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       });
       models.UserGame.hasMany(models.UserGameHistory, {
         foreignKey: "user_id",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       });
     }
   }
@@ -41,12 +45,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       createdAt: {
         type: DataTypes.DATE,
-        defaultValue: new Date(),
+        defaultValue: new Date().getTime(),
         field: "created_at",
       },
       updatedAt: {
         type: DataTypes.DATE,
-        defaultValue: new Date(),
+        defaultValue: new Date().getTime(),
         field: "updated_at",
       },
     },
@@ -54,6 +58,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "UserGame",
       tableName: "user_games",
+      paranoid: true,
     }
   );
   return UserGame;
