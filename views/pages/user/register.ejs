@@ -3,7 +3,7 @@
 
 <head>
     <!-- General Head -->
-    <%- include('../partials/head'); %>
+    <%- include('../../partials/head'); %>
         <!-- Internal icon -->
         <link rel="icon" type="image/x-icon" href="../images/home/icon.ico">
         <!-- Internal CSS -->
@@ -12,10 +12,10 @@
 
 <body>
     <% if (message !==true) { %>
-        <%- include('../partials/error'); %>
+        <%- include('../../partials/error'); %>
             <% } %>
                 <header class="container-fluid px-0">
-                    <%- include('../partials/header'); %>
+                    <%- include('../../partials/header'); %>
                 </header>
                 <main>
                     <div class="form-signup w-100 m-auto">
@@ -55,7 +55,7 @@
                     </div>
                 </main>
                 <!-- General Javascript -->
-                <%- include('../partials/script') %>
+                <%- include('../../partials/script') %>
                     <script>
                         function checked() {
                             if (document.getElementById("adminTrue").checked) {

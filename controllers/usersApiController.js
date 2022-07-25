@@ -75,7 +75,7 @@ class UsersApiController {
       },
       { where: { id: req.params.id } }
     )
-      .then((data) =>
+      .then(() =>
         res.status(200).json({ message: "Successfully updated user data" })
       )
       .catch((err) => {

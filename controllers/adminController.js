@@ -16,34 +16,60 @@ class AdminController {
             "lastName",
             "addres",
             "phoneNumber",
+            "bio",
           ],
         },
       ],
     })
       .then((data) => {
-        res.render("pages/admin", { title: "Administrator", data });
+        res.render("pages/admin/dashboard", {
+          title: "Administrator",
+          message: true,
+          data,
+        });
       })
       .catch((err) => {
-        createError(err.code);
+        res.render("pages/error", {
+          title: "Error",
+          message: err.message,
+          error: err,
+        });
       });
   }
-  createUserGame(req, res) {
+  createUserGame(req, res, next) {
+    const {
+      username,
+      password,
+      firstName,
+      lastName,
+      addres,
+      phoneNumber,
+      bio,
+      isAdmin,
+    } = req.body;
     UserGame.create({
-      username: req.body.username,
-      password: req.body.password,
-      isAdmin: req.body.isAdmin,
+      username,
+      password,
+      isAdmin,
     })
       .then((data) => {
         UserGameBiodata.create({
           userId: data.id,
+          firstName,
+          lastName,
+          addres,
+          phoneNumber,
+          bio,
         });
       })
       .then(() => {
-        res.status(200).json({ message: "Successfully created new user" });
+        res.redirect("/admin");
       })
       .catch((err) => {
-        res.status(400).json({
+        res.render("pages/error", {
+          title: "Error",
           message: err.message,
+          error: err,
         });
       });
   }
@@ -53,44 +79,112 @@ class AdminController {
         {
           model: UserGameBiodata,
           as: "biodata",
-          attributes: ["userId", "firstName", "lastName"],
+          attributes: [
+            "userId",
+            "firstName",
+            "lastName",
+            "addres",
+            "phoneNumber",
+            "bio",
+          ],
         },
       ],
       where: { id: req.params.id },
     })
       .then((data) => {
-        res.render("pages/viewProfile", { title: "View Profile", data });
+        res.render("pages/admin/viewProfile", { title: "View Profile", data });
       })
       .catch((err) => {
-        createError(err.code);
+        res.render("pages/error", {
+          title: "Error",
+          message: err.message,
+          error: err,
+        });
+      });
+  }
+  getEditPage(req, res) {
+    UserGame.findOne({
+      include: [
+        {
+          model: UserGameBiodata,
+          as: "biodata",
+          attributes: [
+            "userId",
+            "firstName",
+            "lastName",
+            "addres",
+            "phoneNumber",
+            "bio",
+          ],
+        },
+      ],
+      where: { id: req.params.id },
+    })
+      .then((data) => {
+        res.render("pages/admin/editProfile", { title: "Edit Profile", data });
+      })
+      .catch((err) => {
+        res.render("pages/error", {
+          title: "Error",
+          message: err.message,
+          error: err,
+        });
       });
   }
   updateUserById(req, res) {
+    console.log(req.body);
+    const {
+      username,
+      password,
+      firstName,
+      lastName,
+      addres,
+      phoneNumber,
+      bio,
+      isAdmin,
+    } = req.body;
     UserGame.update(
       {
-        username: req.body.username,
-        isAdmin: req.body.isAdmin,
+        username,
+        password,
+        isAdmin,
         updatedAt: new Date().getTime(),
       },
       { where: { id: req.params.id } }
     )
-      .then((data) =>
-        res.status(200).json({ message: "Successfully updated user data" })
+      .then(() =>
+        UserGameBiodata.update(
+          {
+            firstName,
+            lastName,
+            addres,
+            phoneNumber,
+            bio,
+          },
+          { where: { userId: req.params.id } }
+        )
       )
+      .then(() => {
+        res.redirect("/admin");
+      })
       .catch((err) => {
-        res.status(400).json({
+        res.render("pages/error", {
+          title: "Error",
           message: err.message,
+          error: err,
         });
       });
   }
   deleteUserById(req, res) {
     UserGame.destroy({ where: { id: req.params.id } })
-      .then(() =>
-        res.status(200).json({ message: "Successfully deleted user data" })
-      )
+      .then(() => {
+        res.redirect("/admin");
+      })
       .catch((err) => {
-        res.status(400).json({
+        res.render("pages/error", {
+          title: "Error",
           message: err.message,
+          error: err,
         });
       });
   }

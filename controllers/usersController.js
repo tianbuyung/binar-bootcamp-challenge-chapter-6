@@ -4,15 +4,14 @@ const { UserGame, UserGameBiodata, UserGameHistory } = Model;
 class UsersController {
   constructor() {}
   getRegisterPage(req, res) {
-    res.render("pages/register", { title: "Sign up", message: true });
+    res.render("pages/user/register", { title: "Sign up", message: true });
   }
   getLoginPage(req, res) {
-    res.render("pages/login", { title: "Sign in", message: true });
+    res.render("pages/user/login", { title: "Sign in", message: true });
   }
   createNewUser(req, res) {
     let err = null;
     const { username, password, confirmPassword, isAdmin } = req.body;
-    console.log(isAdmin);
     if (password === confirmPassword) {
       UserGame.create({
         username: username,
@@ -28,7 +27,7 @@ class UsersController {
           res.redirect("/users/login");
         })
         .catch((err) => {
-          res.render("pages/register", {
+          res.render("pages/user/register", {
             title: "Sign up",
             message: err.message,
             messageClass: "alert-danger",
@@ -36,7 +35,7 @@ class UsersController {
         });
     } else {
       err = "Password does not match.";
-      res.render("pages/register", {
+      res.render("pages/user/register", {
         title: "Sign up",
         message: err,
         messageClass: "alert-danger",
@@ -49,7 +48,7 @@ class UsersController {
     const { username, password } = req.body;
     if (!username || !password) {
       err = "Password/Username does not empty.";
-      res.render("pages/login", {
+      res.render("pages/user/login", {
         title: "Sign in",
         message: err,
         messageClass: "alert-danger",
@@ -69,7 +68,7 @@ class UsersController {
           }
         } else {
           err = "Password does not match.";
-          res.render("pages/login", {
+          res.render("pages/user/login", {
             title: "Sign in",
             message: err,
             messageClass: "alert-danger",
@@ -77,7 +76,7 @@ class UsersController {
         }
       })
       .catch((err) => {
-        res.render("pages/login", {
+        res.render("pages/user/login", {
           title: "Sign in",
           message: err.message,
           messageClass: "alert-danger",
