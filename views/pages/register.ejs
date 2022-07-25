@@ -17,33 +17,52 @@
                 <header class="container-fluid px-0">
                     <%- include('../partials/header'); %>
                 </header>
-                <main class="text-center">
+                <main>
                     <div class="form-signup w-100 m-auto">
                         <form action="/users/register" method="post">
-                            <img class="mb-4" src="../images/home/icon.ico" alt="" width="72" height="57">
-                            <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
-                            <div class="form-floating">
-                                <input type="email" class="form-control" id="floatingInput"
-                                    placeholder="name@example.com" name="email">
-                                <label for="floatingInput">Email address</label>
+                            <div class="text-center">
+                                <img class="mb-4" src="../images/home/icon.ico" alt="" width="72" height="57">
+                                <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="username"
+                                        name="username">
+                                    <label for="floatingInput">Username</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="floatingPassword"
+                                        placeholder="Password" name="password">
+                                    <label for="floatingPassword">Password</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="floatingConfirmPassword"
+                                        placeholder="Re-enter your password here" name="confirmPassword">
+                                    <label for="floatingConfirmPassword">Confirm Password</label>
+                                </div>
                             </div>
-                            <div class="form-floating">
-                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
-                                    name="password">
-                                <label for="floatingPassword">Password</label>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" value="true" id="adminTrue"
+                                    name="isAdmin">
+                                <input class="form-check-input" type="hidden" value="false" id="adminFalse"
+                                    name="isAdmin">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Admin
+                                </label>
                             </div>
-                            <div class="form-floating">
-                                <input type="password" class="form-control" id="floatingConfirmPassword"
-                                    placeholder="Re-enter your password here" name="confirmPassword">
-                                <label for="floatingConfirmPassword">Confirm Password</label>
-                            </div>
-                            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
-                            <p class="mt-5 mb-3 text-muted">© 2022</p>
+                            <button class="w-100 btn btn-lg btn-primary" type="submit" onclick="checked()">Sign
+                                up</button>
+                            <p class="mt-5 mb-3 text-muted text-center">© 2022</p>
                         </form>
                     </div>
                 </main>
                 <!-- General Javascript -->
                 <%- include('../partials/script') %>
+                    <script>
+                        function checked() {
+                            if (document.getElementById("adminTrue").checked) {
+                                document.getElementById("adminFalse").disabled = true;
+                            }
+                        }
+                    </script>
 </body>
 
 </html>

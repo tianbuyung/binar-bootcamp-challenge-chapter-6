@@ -12,5 +12,7 @@ router.get("/login", usersController.getLoginPage);
 router.post("/register", usersController.createNewUser);
 // POST login user
 router.post("/login", usersController.loginUser);
+// Get Logout user
+router.get("/logout", usersController.logoutUser);
 
 module.exports = router;
