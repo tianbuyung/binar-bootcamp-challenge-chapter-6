@@ -1,0 +1,199 @@
+.first-page {
+  background-image: url(../images/home/main-bg.jpg);
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  height: 100vh;
+  width: 100%;
+}
+
+.button-first-page {
+  width: 16.25rem;
+  height: 3.75rem;
+}
+
+.second-page {
+  background-image: url(../images/home/the-games-bg.jpg);
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  height: 100vh;
+  width: 100%;
+}
+
+.text-second-page {
+  margin-top: -3.125rem;
+}
+
+.carousel-indicators [data-bs-target] {
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 50%;
+}
+
+.carousel-control-next-icon {
+  background-image: url(../images/home/switch-right.svg);
+}
+
+.carousel-control-prev-icon {
+  background-image: url(../images/home/switch-left.svg);
+}
+
+@media screen and (min-width: 576px) {
+  .carousel-indicators [data-bs-target] {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+  .carousel-control-prev {
+    left: -4rem;
+  }
+  .carousel-control-next {
+    right: -4rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .carousel-indicators [data-bs-target] {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+  .carousel-control-prev {
+    left: -6rem;
+  }
+  .carousel-control-next {
+    right: -6rem;
+  }
+}
+
+.third-page {
+  background-image: url(../images/home/features.jpg);
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  height: 100vh;
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .page-container {
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+
+  .page-sidenav {
+    display: block !important;
+  }
+}
+
+.tl-item {
+  border-radius: 3px;
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.tl-item > * {
+  padding: 10px;
+}
+
+.tl-item:last-child .tl-dot:after {
+  display: none;
+}
+
+.tl-item.active .tl-dot:before {
+  border-color: #ffffff;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(68, 139, 255, 0.2);
+}
+
+.tl-dot {
+  position: relative;
+  border-color: rgba(160, 175, 185, 0.15);
+}
+
+.tl-dot:after,
+.tl-dot:before {
+  content: "";
+  position: absolute;
+  border-color: inherit;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tl-dot:after {
+  width: 0;
+  height: auto;
+  top: 40px;
+  bottom: -25px;
+  border-right-width: 0;
+  border-top-width: 0;
+  border-bottom-width: 0;
+  border-radius: 0;
+}
+
+.tl-content p:last-child {
+  margin-bottom: 0;
+}
+
+.b-white {
+  border-color: #ffffff !important;
+}
+
+.fourth-page {
+  background-image: url(../images/home/requirements.png);
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  height: 100vh;
+  width: 100%;
+}
+
+.fifth-page {
+  background-image: radial-gradient(
+      70.52% 37.27% at 24.21% 47.47%,
+      rgba(35, 15, 15, 0) 0%,
+      rgba(0, 0, 0, 0) 51.1%,
+      #080a0b 99.74%
+    ),
+    url(../images/home/top-score-bg.png);
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  height: 100vh;
+  width: 100%;
+}
+
+.button-fifth-page {
+  width: 16.25rem;
+  height: 3.75rem;
+}
+
+.img-shadow-fifth-page {
+  box-shadow: 7px 7px 7px #ffb548;
+}
+
+.sixth-page {
+  background-image: url(../images/home/newsletter.png);
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  height: 100vh;
+  width: 100%;
+}
+
+.bg-footer {
+  background-color: #080a0b;
+}
+
+#btn-back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+}

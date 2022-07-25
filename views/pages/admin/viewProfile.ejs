@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- General Head -->
+    <%- include('../../partials/head'); %>
+        <!-- Internal icon -->
+        <link rel="icon" type="image/x-icon" href="../../images/home/icon.ico">
+</head>
+
+<body>
+    <main>
+        <div class="position-absolute top-0 start-50 translate-middle-x pt-5">
+            <div class="card" style="width: 18rem;">
+                <img src="../images/admin/profile-picture.png" class="card-img-top" alt="#">
+                <div class="card-body">
+                    <h5 class="card-title text-center">
+                        <%= `${data.biodata.firstName} ${data.biodata.lastName}` %>
+                    </h5>
+                    <p class="card-text">
+                        <%= data.biodata.bio %>
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Phone Number: <%= data.biodata.phoneNumber %>
+                    </li>
+                    <li class="list-group-item">Address: <%= data.biodata.addres %>
+                    </li>
+                </ul>
+                <div class="card-body text-center">
+                    <a href="/admin" class="card-link">Dashboard</a>
+                    <a href="/admin/edit/<%= data.id %> " class="card-link">Edit</a>
+                    <a href="/admin/delete/<%= data.id %>" class="card-link">Delete</a>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- General Javascript -->
+    <%- include('../../partials/script') %>
+</body>
+
+</html>

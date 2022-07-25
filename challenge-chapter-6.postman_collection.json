@@ -1,0 +1,416 @@
+{
+	"info": {
+		"_postman_id": "8aa4bfd6-1ea3-46df-a8d6-482be3ce20a8",
+		"name": "challenge-chapter-6",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17172090"
+	},
+	"item": [
+		{
+			"name": "Create a new user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"kakiku\",\n    \"password\": \"123456\",\n    \"isAdmin\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/api/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create a new user",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"babibu\",\n    \"password\": \"123456\",\n    \"isAdmin\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "43"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2b-kTsQJjPal24ACeSDNNE+SkpxOV0\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Jul 2022 10:22:42 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Successfully created new user\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Read All Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Read All Users",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1279"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"4ff-zHQHDqwb0bVXG1c6cFWzmmFa7Tw\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Jul 2022 10:22:16 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Successfully read all users data\",\n    \"data\": [\n        {\n            \"id\": \"96e843ed-9488-4fdc-bb33-7bafaf6cf2cd\",\n            \"username\": \"cacicu\",\n            \"password\": \"123456\",\n            \"isAdmin\": true,\n            \"deletedAt\": null,\n            \"isDeleted\": null,\n            \"createdAt\": \"2022-07-24T07:09:52.950Z\",\n            \"updatedAt\": \"2022-07-24T07:09:52.950Z\",\n            \"biodata\": {\n                \"userId\": \"96e843ed-9488-4fdc-bb33-7bafaf6cf2cd\",\n                \"firstName\": null,\n                \"lastName\": null\n            }\n        },\n        {\n            \"id\": \"4ab5b413-a0b5-4718-95ad-a96ba25960a4\",\n            \"username\": \"dadidu\",\n            \"password\": \"123456\",\n            \"isAdmin\": true,\n            \"deletedAt\": null,\n            \"isDeleted\": null,\n            \"createdAt\": \"2022-07-24T07:09:52.950Z\",\n            \"updatedAt\": \"2022-07-24T07:09:52.950Z\",\n            \"biodata\": {\n                \"userId\": \"4ab5b413-a0b5-4718-95ad-a96ba25960a4\",\n                \"firstName\": null,\n                \"lastName\": null\n            }\n        },\n        {\n            \"id\": \"48e16e4b-fb57-494b-ad61-4c58ced1294a\",\n            \"username\": \"fafifu\",\n            \"password\": \"123456\",\n            \"isAdmin\": true,\n            \"deletedAt\": null,\n            \"isDeleted\": null,\n            \"createdAt\": \"2022-07-24T07:09:52.950Z\",\n            \"updatedAt\": \"2022-07-24T07:09:52.950Z\",\n            \"biodata\": {\n                \"userId\": \"48e16e4b-fb57-494b-ad61-4c58ced1294a\",\n                \"firstName\": null,\n                \"lastName\": null\n            }\n        },\n        {\n            \"id\": \"175df20b-9166-4738-83fb-45cfd0b50b5f\",\n            \"username\": \"hahihu\",\n            \"password\": \"123456\",\n            \"isAdmin\": true,\n            \"deletedAt\": null,\n            \"isDeleted\": null,\n            \"createdAt\": \"2022-07-24T07:09:52.950Z\",\n            \"updatedAt\": \"2022-07-24T10:16:52.290Z\",\n            \"biodata\": {\n                \"userId\": \"175df20b-9166-4738-83fb-45cfd0b50b5f\",\n                \"firstName\": null,\n                \"lastName\": null\n            }\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Read Detail a User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/users/4ab5b413-a0b5-4718-95ad-a96ba25960a4",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"users",
+						"4ab5b413-a0b5-4718-95ad-a96ba25960a4"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Read Detail a User",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/users/175df20b-9166-4738-83fb-45cfd0b50b5f",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"175df20b-9166-4738-83fb-45cfd0b50b5f"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "358"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"166-JXYUYpuK5mKaf9mGcWwWY/81L1A\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Jul 2022 10:21:51 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Successfully read detail a user\",\n    \"data\": {\n        \"id\": \"175df20b-9166-4738-83fb-45cfd0b50b5f\",\n        \"username\": \"hahihu\",\n        \"password\": \"123456\",\n        \"isAdmin\": true,\n        \"deletedAt\": null,\n        \"isDeleted\": null,\n        \"createdAt\": \"2022-07-24T07:09:52.950Z\",\n        \"updatedAt\": \"2022-07-24T10:16:52.290Z\",\n        \"biodata\": {\n            \"userId\": \"175df20b-9166-4738-83fb-45cfd0b50b5f\",\n            \"firstName\": null,\n            \"lastName\": null\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Data a User",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"hahihu\",\n    \"isAdmin\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/api/users/175df20b-9166-4738-83fb-45cfd0b50b5f",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"users",
+						"175df20b-9166-4738-83fb-45cfd0b50b5f"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update Data a User",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"hahihu\",\n    \"isAdmin\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/users/175df20b-9166-4738-83fb-45cfd0b50b5f",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"175df20b-9166-4738-83fb-45cfd0b50b5f"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "44"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2c-LJFuk45eTz6Hhh1lgrrW8R5fFOQ\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Jul 2022 10:24:53 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Successfully updated user data\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete a User by Id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/users/4ab5b413-a0b5-4718-95ad-a96ba25960a4",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"users",
+						"4ab5b413-a0b5-4718-95ad-a96ba25960a4"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete a User by Id",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/users/4ab5b413-a0b5-4718-95ad-a96ba25960a4",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"4ab5b413-a0b5-4718-95ad-a96ba25960a4"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "44"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2c-1e7bHDARvxCZUrW9zrD6P5vcAzQ\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Jul 2022 15:12:36 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Successfully deleted user data\"\n}"
+				}
+			]
+		}
+	]
+}
