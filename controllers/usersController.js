@@ -1,5 +1,7 @@
 const Model = require("../app-db/models");
 const { UserGame, UserGameBiodata, UserGameHistory } = Model;
+const encrypt = require("bcrypt");
+const saltRounds = 10;
 
 class UsersController {
   constructor() {}
@@ -15,7 +17,7 @@ class UsersController {
     if (password === confirmPassword) {
       UserGame.create({
         username: username,
-        password: password,
+        password: encrypt.hashSync(password, saltRounds),
         isAdmin: isAdmin,
       })
         .then((data) => {
@@ -58,7 +60,7 @@ class UsersController {
       where: { username },
     })
       .then((data) => {
-        if (data.password === password) {
+        if (encrypt.compareSync(password, data.password)) {
           if (data.isAdmin === true) {
             session.username = data.username;
             res.redirect("/admin");
