@@ -1,12 +1,14 @@
 const Model = require("../app-db/models");
 const { UserGame, UserGameBiodata, UserGameHistory } = Model;
+const encrypt = require("bcrypt");
+const saltRounds = 10;
 
 class UsersApiController {
   constructor() {}
   createUserGame(req, res) {
     UserGame.create({
       username: req.body.username,
-      password: req.body.password,
+      password: encrypt.hashSync(req.body.password, saltRounds),
       isAdmin: req.body.isAdmin,
     })
       .then((data) => {

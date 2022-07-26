@@ -1,6 +1,8 @@
 const Model = require("../app-db/models");
 const { UserGame, UserGameBiodata, UserGameHistory } = Model;
 const createError = require("http-errors");
+const encrypt = require("bcrypt");
+const saltRounds = 10;
 
 class AdminController {
   constructor() {}
@@ -49,7 +51,7 @@ class AdminController {
     } = req.body;
     UserGame.create({
       username,
-      password,
+      password: encrypt.hashSync(password, saltRounds),
       isAdmin,
     })
       .then((data) => {

@@ -42,7 +42,13 @@ This project is built to implement Database, SQL, ORM, and Express (view engine 
    npx sequelize-cli db:migrate
    ```
 
-9. Start your App via terminal
+9. Seed your database with bulk data
+
+   ```sh
+   npx sequelize-cli db:seed:all
+   ```
+
+10. Start your App via terminal
 
    ```sh
    npm run start
