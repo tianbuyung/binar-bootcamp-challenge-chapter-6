@@ -1,0 +1,7 @@
+what already good
+- bagus nih halaman middleware udah dikasih di routenya, which is safer. Mungkin next chapter kita akan coba improve pake jwt token
+- overall udah bagus sih
+
+
+what need to improved
+- logic update dan create mungkin perlu sedikit diperbaiki, tapi secara keseluruhan udah bagus

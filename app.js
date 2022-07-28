@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const sessions = require("express-session");
 
+// udah bagus nih pemisahan routernya jadinya rapi app.jsnya
 const indexRouter = require("./routes/indexRoute");
 const gameRouter = require("./routes/gameRoute");
 const usersRouter = require("./routes/usersRoute");

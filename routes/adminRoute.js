@@ -5,7 +5,7 @@ const AdminController = require("../controllers/adminController");
 const adminController = new AdminController();
 
 const adminAuth = require("../middleware/authentication");
-
+//
 // GET dashboard page
 router.get("/", adminAuth, adminController.getDashboardPage);
 // POST create new user

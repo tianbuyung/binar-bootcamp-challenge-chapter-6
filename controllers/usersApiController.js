@@ -2,10 +2,11 @@ const Model = require("../app-db/models");
 const { UserGame, UserGameBiodata, UserGameHistory } = Model;
 const encrypt = require("bcrypt");
 const saltRounds = 10;
-
+// review di halaman sini kurang lebih sama kek yang di adminController
 class UsersApiController {
   constructor() {}
   createUserGame(req, res) {
+    // ini juga pastiin usernamenya belom ada sebelum create
     UserGame.create({
       username: req.body.username,
       password: encrypt.hashSync(req.body.password, saltRounds),
