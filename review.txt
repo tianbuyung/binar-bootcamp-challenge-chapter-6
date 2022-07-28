@@ -5,3 +5,5 @@ what already good
 
 what need to improved
 - logic update dan create mungkin perlu sedikit diperbaiki, tapi secara keseluruhan udah bagus
+- table design mungkin perlu improvement, tapi ini akan berkembang seiring berjalannya waktu sih. makin banyak jam terbang
+nanti makin tau design table yang paling efisien itu kaya gimana. Keep learning aja
