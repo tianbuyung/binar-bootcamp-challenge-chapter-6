@@ -5,8 +5,29 @@ const encrypt = require("bcrypt");
 const saltRounds = 10;
 
 class AdminController {
+  // hapus aja kalo gak kepake, karena constructor ini ngebuat objeck dulu, jadinya bikin performance sedikit lebih lama
   constructor() {}
   getDashboardPage(req, res) {
+    // .. udah bagus, attributes juga di specify satu persatu jadinya lebih aman. Mungkin untuk challenge buat mas septian sendnri
+    // bisa di rubah jadi pagination mas. dari sisi FE juga nanti ada pagenya
+    // tapi kalo bisa dikasih attribute juga di UserGame.findAll nya, soalnya nanti UserGame passwordnya ikut ke display juga
+    // UserGame.findAll({
+    //   attributes: ['disini nanti masukin mau attribute apaan aja yang di show'],
+    //   include: [
+    //     {
+    //       model: UserGameBiodata,
+    //       as: "biodata",
+    //       attributes: [
+    //         "userId",
+    //         "firstName",
+    //         "lastName",
+    //         "addres",
+    //         "phoneNumber",
+    //         "bio",
+    //       ],
+    //     },
+    //   ],
+    // })
     UserGame.findAll({
       include: [
         {
@@ -24,6 +45,7 @@ class AdminController {
       ],
     })
       .then((data) => {
+        // bagus nih jadinya lebih rapi pagenya
         res.render("pages/admin/dashboard", {
           title: "Administrator",
           message: true,
@@ -49,12 +71,19 @@ class AdminController {
       bio,
       isAdmin,
     } = req.body;
+    // mungkin logicnya bisa diperbaiki dengan cara cari dulu ada gak usernamenya yang dimasukin. Kalo ada jangan dibuat lagi
+    // karena username gak mungkin bisa sama kan
+    // bisa juga pake find or create function dari sequelize
+    // https://sebhastian.com/sequelize-findorcreate/
     UserGame.create({
       username,
+      // pake bcryptjs aja mas, soalnya si bcrypt ini suka ada bug kalo dideploy ke server. Logicnya sama aja dan functionnya juga
       password: encrypt.hashSync(password, saltRounds),
       isAdmin,
     })
       .then((data) => {
+        // sebenenrya chaining gini gak terlalu bagus sih, jadi sama kaya callback hell jatohnya,
+        // tapi nanti kita bahas di chapter 7.
         UserGameBiodata.create({
           userId: data.id,
           firstName,
@@ -76,6 +105,7 @@ class AdminController {
       });
   }
   viewUserById(req, res) {
+    // sama ini jug attribute usernya di tentuin juga mau mana aja yang keluar
     UserGame.findOne({
       include: [
         {
@@ -145,6 +175,8 @@ class AdminController {
       bio,
       isAdmin,
     } = req.body;
+    // ini juga pastiin username gak boleh sama
+    // kalo dari sisi proteksi buat aplikasi kita, better untuk check dulu apakah usernya ada terlebih dahulu sebelum diupdate
     UserGame.update(
       {
         username,
@@ -178,6 +210,7 @@ class AdminController {
       });
   }
   deleteUserById(req, res) {
+    // bagus nih udah ada paranoid jadinya aman
     UserGame.destroy({ where: { id: req.params.id } })
       .then(() => {
         res.redirect("/admin");

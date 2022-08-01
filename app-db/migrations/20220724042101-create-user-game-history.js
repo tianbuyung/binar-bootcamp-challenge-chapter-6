@@ -2,6 +2,8 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("user_game_histories", {
+      // ini mungkin perlu di kasih tau user pilih apa, dan computer pilih apa. Jadi kita jadi tau gak sekedar win lose situationnya doang
+      // tapi tau kalo usernya milih A atau B atau C
       id: {
         allowNull: false,
         autoIncrement: true,
