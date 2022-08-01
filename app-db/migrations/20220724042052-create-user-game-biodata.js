@@ -22,7 +22,7 @@ module.exports = {
       last_name: {
         type: Sequelize.STRING,
       },
-      addres: {
+      address: {
         type: Sequelize.STRING,
       },
       phone_number: {

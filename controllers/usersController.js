@@ -1,6 +1,6 @@
 const Model = require("../app-db/models");
 const { UserGame, UserGameBiodata, UserGameHistory } = Model;
-const encrypt = require("bcrypt");
+const encrypt = require("bcryptjs");
 const saltRounds = 10;
 
 class UsersController {
