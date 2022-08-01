@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       firstName: { type: DataTypes.STRING, field: "first_name" },
       lastName: { type: DataTypes.STRING, field: "last_name" },
       // ini typo keknya
-      addres: DataTypes.STRING,
+      // Status update is Done
+      address: DataTypes.STRING,
       phoneNumber: { type: DataTypes.STRING, field: "phone_number" },
       bio: DataTypes.STRING,
       deletedAt: {

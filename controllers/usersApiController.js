@@ -1,6 +1,6 @@
 const Model = require("../app-db/models");
 const { UserGame, UserGameBiodata, UserGameHistory } = Model;
-const encrypt = require("bcrypt");
+const encrypt = require("bcryptjs");
 const saltRounds = 10;
 // review di halaman sini kurang lebih sama kek yang di adminController
 class UsersApiController {
@@ -27,19 +27,37 @@ class UsersApiController {
       });
   }
   getAllUsers(req, res) {
-    UserGame.findAll({
+    const query = req.query;
+    let limit = Number(query.limit) || 5;
+    let page = Number(query.page) || 1;
+    let offset = (page - 1) * limit;
+    UserGame.findAndCountAll({
+      order: ["id"],
+      limit: limit,
+      offset,
+      attributes: ["id", "username", "isAdmin", "createdAt", "updatedAt"],
       include: [
         {
           model: UserGameBiodata,
           as: "biodata",
-          attributes: ["userId", "firstName", "lastName"],
+          attributes: [
+            "userId",
+            "firstName",
+            "lastName",
+            "address",
+            "phoneNumber",
+            "bio",
+          ],
         },
       ],
     })
       .then((data) =>
-        res
-          .status(200)
-          .json({ message: "Successfully read all users data", data })
+        res.status(200).json({
+          message: "Successfully read all users data",
+          data,
+          currentPage: page,
+          totalPages: Math.ceil(data.count / limit),
+        })
       )
       .catch((err) => {
         res.status(400).json({
@@ -49,11 +67,19 @@ class UsersApiController {
   }
   getUserById(req, res) {
     UserGame.findOne({
+      attributes: ["id", "username", "isAdmin", "createdAt", "updatedAt"],
       include: [
         {
           model: UserGameBiodata,
           as: "biodata",
-          attributes: ["userId", "firstName", "lastName"],
+          attributes: [
+            "userId",
+            "firstName",
+            "lastName",
+            "address",
+            "phoneNumber",
+            "bio",
+          ],
         },
       ],
       where: { id: req.params.id },

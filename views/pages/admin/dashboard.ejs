@@ -111,41 +111,62 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <% for( let index=0; index < data.length; index++ ) { %>
+                                                <% for( let index=0; index < users.length; index++ ) { %>
                                                     <tr>
                                                         <td>
                                                             <%= index+1 %>
                                                         </td>
                                                         <td>
-                                                            <%= data[index].id %>
+                                                            <%= users[index].id %>
                                                         </td>
                                                         <td>
-                                                            <%= data[index].username %>
+                                                            <%= users[index].username %>
                                                         </td>
                                                         <td>
-                                                            <%= data[index].biodata.firstName %>
+                                                            <%= users[index].biodata.firstName %>
                                                         </td>
                                                         <td>
-                                                            <%= data[index].biodata.lastName %>
+                                                            <%= users[index].biodata.lastName %>
                                                         </td>
                                                         <td>
-                                                            <%= data[index].biodata.addres %>
+                                                            <%= users[index].biodata.addres %>
                                                         </td>
                                                         <td>
-                                                            <%= data[index].biodata.phoneNumber %>
+                                                            <%= users[index].biodata.phoneNumber %>
                                                         </td>
                                                         <td>
-                                                            <a href="/admin/<%= data[index].id %> "><i
+                                                            <a href="/admin/<%= users[index].id %> "><i
                                                                     class="bi bi-eye-fill"></i></a> |
-                                                            <a href="/admin/edit/<%= data[index].id %> "><i
+                                                            <a href="/admin/edit/<%= users[index].id %> "><i
                                                                     class="bi bi-pencil-fill"></i></a> |
-                                                            <a href="/admin/delete/<%= data[index].id %> "><i
+                                                            <a href="/admin/delete/<%= users[index].id %> "><i
                                                                     class="bi bi-trash3-fill"></i></a>
                                                         </td>
                                                     </tr>
                                                     <% } %>
                                             </tbody>
                                         </table>
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination">
+                                                <li class="page-item">
+                                                    <a class="page-link" href="/admin" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                    </a>
+                                                </li>
+                                                <% for( let index=0; index < pages; index++ ) { %>
+                                                    <li class="page-item"><a class="page-link"
+                                                            href="/admin?page=<%= index + 1 %>">
+                                                            <%= index + 1 %>
+                                                        </a></li>
+                                                    <% } %>
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="/admin?page=<%= pages %>"
+                                                                aria-label="Next">
+                                                                <span aria-hidden="true">&raquo;</span>
+                                                            </a>
+                                                        </li>
+                                            </ul>
+                                        </nav>
                                     </div>
                                 </div>
                             </div>

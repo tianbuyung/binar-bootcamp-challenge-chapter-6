@@ -1,7 +1,7 @@
 const Model = require("../app-db/models");
 const { UserGame, UserGameBiodata, UserGameHistory } = Model;
 const createError = require("http-errors");
-const encrypt = require("bcrypt");
+const encrypt = require("bcryptjs");
 const saltRounds = 10;
 
 class AdminController {
@@ -21,14 +21,23 @@ class AdminController {
     //         "userId",
     //         "firstName",
     //         "lastName",
-    //         "addres",
+    //         "address",
     //         "phoneNumber",
     //         "bio",
     //       ],
     //     },
     //   ],
     // })
-    UserGame.findAll({
+    // Status update is Done
+    const query = req.query;
+    let limit = Number(query.limit) || 5;
+    let page = Number(query.page) || 1;
+    let offset = (page - 1) * limit;
+    let users = UserGame.findAndCountAll({
+      order: ["id"],
+      limit,
+      offset,
+      attributes: ["id", "username", "isAdmin", "createdAt", "updatedAt"],
       include: [
         {
           model: UserGameBiodata,
@@ -37,19 +46,23 @@ class AdminController {
             "userId",
             "firstName",
             "lastName",
-            "addres",
+            "address",
             "phoneNumber",
             "bio",
           ],
         },
       ],
-    })
+    });
+    users
       .then((data) => {
+        const itemCount = data.count;
+        let pageCount = Math.ceil(data.count / limit);
         // bagus nih jadinya lebih rapi pagenya
         res.render("pages/admin/dashboard", {
           title: "Administrator",
           message: true,
-          data,
+          users: data.rows,
+          pages: pageCount,
         });
       })
       .catch((err) => {
@@ -66,7 +79,7 @@ class AdminController {
       password,
       firstName,
       lastName,
-      addres,
+      address,
       phoneNumber,
       bio,
       isAdmin,
@@ -78,6 +91,7 @@ class AdminController {
     UserGame.create({
       username,
       // pake bcryptjs aja mas, soalnya si bcrypt ini suka ada bug kalo dideploy ke server. Logicnya sama aja dan functionnya juga
+      // status update is done
       password: encrypt.hashSync(password, saltRounds),
       isAdmin,
     })
@@ -88,7 +102,7 @@ class AdminController {
           userId: data.id,
           firstName,
           lastName,
-          addres,
+          address,
           phoneNumber,
           bio,
         });
@@ -106,7 +120,9 @@ class AdminController {
   }
   viewUserById(req, res) {
     // sama ini jug attribute usernya di tentuin juga mau mana aja yang keluar
+    // Status update is Done
     UserGame.findOne({
+      attributes: ["id", "username", "isAdmin", "createdAt", "updatedAt"],
       include: [
         {
           model: UserGameBiodata,
@@ -115,7 +131,7 @@ class AdminController {
             "userId",
             "firstName",
             "lastName",
-            "addres",
+            "address",
             "phoneNumber",
             "bio",
           ],
@@ -136,6 +152,7 @@ class AdminController {
   }
   getEditPage(req, res) {
     UserGame.findOne({
+      attributes: ["id", "username", "isAdmin", "createdAt", "updatedAt"],
       include: [
         {
           model: UserGameBiodata,
@@ -144,7 +161,7 @@ class AdminController {
             "userId",
             "firstName",
             "lastName",
-            "addres",
+            "address",
             "phoneNumber",
             "bio",
           ],
@@ -164,13 +181,12 @@ class AdminController {
       });
   }
   updateUserById(req, res) {
-    console.log(req.body);
     const {
       username,
       password,
       firstName,
       lastName,
-      addres,
+      address,
       phoneNumber,
       bio,
       isAdmin,
@@ -191,7 +207,7 @@ class AdminController {
           {
             firstName,
             lastName,
-            addres,
+            address,
             phoneNumber,
             bio,
           },
