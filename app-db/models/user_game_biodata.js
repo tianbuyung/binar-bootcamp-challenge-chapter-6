@@ -19,6 +19,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   UserGameBiodata.init(
     {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
       userId: { type: DataTypes.UUID, field: "user_id" },
       firstName: { type: DataTypes.STRING, field: "first_name" },
       lastName: { type: DataTypes.STRING, field: "last_name" },

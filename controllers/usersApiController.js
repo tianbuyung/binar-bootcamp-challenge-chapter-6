@@ -2,6 +2,8 @@ const Model = require("../app-db/models");
 const { UserGame, UserGameBiodata, UserGameHistory } = Model;
 const encrypt = require("bcryptjs");
 const saltRounds = 10;
+const UserService = require("../services/UserService");
+const userService = new UserService();
 // review di halaman sini kurang lebih sama kek yang di adminController
 class UsersApiController {
   constructor() {}
@@ -26,44 +28,23 @@ class UsersApiController {
         });
       });
   }
-  getAllUsers(req, res) {
+  async getAllUsers(req, res, next) {
     const query = req.query;
-    let limit = Number(query.limit) || 5;
-    let page = Number(query.page) || 1;
-    let offset = (page - 1) * limit;
-    UserGame.findAndCountAll({
-      order: ["id"],
-      limit: limit,
-      offset,
-      attributes: ["id", "username", "isAdmin", "createdAt", "updatedAt"],
-      include: [
-        {
-          model: UserGameBiodata,
-          as: "biodata",
-          attributes: [
-            "userId",
-            "firstName",
-            "lastName",
-            "address",
-            "phoneNumber",
-            "bio",
-          ],
-        },
-      ],
-    })
-      .then((data) =>
-        res.status(200).json({
-          message: "Successfully read all users data",
-          data,
-          currentPage: page,
-          totalPages: Math.ceil(data.count / limit),
-        })
-      )
-      .catch((err) => {
-        res.status(400).json({
-          message: err.message,
-        });
+    try {
+      const payload = await userService.findAndCountAll(query);
+      res.status(200).json({
+        message: "Successfully read all users data",
+        data: payload[0].rows,
+        currentPage: payload[2],
+        totalPages: Math.ceil(payload[0].count / payload[1]),
       });
+    } catch (err) {
+      res.status(500).json({
+        message: err.message,
+        code: 500,
+        stack: err.stack,
+      });
+    }
   }
   getUserById(req, res) {
     UserGame.findOne({
