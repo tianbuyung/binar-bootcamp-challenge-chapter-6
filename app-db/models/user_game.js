@@ -25,16 +25,29 @@ module.exports = (sequelize, DataTypes) => {
   UserGame.init(
     {
       id: {
+        allowNull: false,
         type: DataTypes.UUID,
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
+        unique: true,
       },
-        // ini juga boleh dikasih validate username, gak boleh sama kasih aja validation harus unique. Kasih
-        // validate juga buat gak boleh kosong dan semacamnya, sama kek password. Tapi untuk tahap challenge ini udah bagus
-      username: DataTypes.STRING,
-        // mungkin password bisa dikasih validation kek harus berapa gitu panjangnya
-      password: DataTypes.STRING,
+      // ini juga boleh dikasih validate username, gak boleh sama kasih aja validation harus unique. Kasih
+      // validate juga buat gak boleh kosong dan semacamnya, sama kek password. Tapi untuk tahap challenge ini udah bagus
+      username: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        unique: true,
+      },
+      password: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          len: [8, 128],
+        },
+      },
+      // mungkin password bisa dikasih validation kek harus berapa gitu panjangnya
       isAdmin: {
+        allowNull: false,
         type: DataTypes.BOOLEAN,
         field: "is_admin",
       },

@@ -17,6 +17,9 @@ module.exports = {
       password: {
         allowNull: false,
         type: Sequelize.STRING,
+        validate: {
+          len: [8, 128],
+        },
       },
       is_admin: {
         allowNull: false,

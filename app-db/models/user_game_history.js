@@ -18,7 +18,19 @@ module.exports = (sequelize, DataTypes) => {
   }
   UserGameHistory.init(
     {
-      userId: { type: DataTypes.UUID, field: "user_id" },
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+        unique: true,
+      },
+      userId: {
+        allowNull: false,
+        type: DataTypes.UUID,
+        field: "user_id",
+        unique: true,
+      },
       isWin: { type: DataTypes.STRING, field: "is_win" },
       deletedAt: {
         type: DataTypes.DATE,

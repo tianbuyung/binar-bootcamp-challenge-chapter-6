@@ -88,18 +88,21 @@ class AdminController {
     // karena username gak mungkin bisa sama kan
     // bisa juga pake find or create function dari sequelize
     // https://sebhastian.com/sequelize-findorcreate/
-    UserGame.create({
-      username,
-      // pake bcryptjs aja mas, soalnya si bcrypt ini suka ada bug kalo dideploy ke server. Logicnya sama aja dan functionnya juga
-      // status update is done
-      password: encrypt.hashSync(password, saltRounds),
-      isAdmin,
+    // status update is done
+    UserGame.findOrCreate({
+      where: {
+        username,
+        // pake bcryptjs aja mas, soalnya si bcrypt ini suka ada bug kalo dideploy ke server. Logicnya sama aja dan functionnya juga
+        // status update is done
+        password: encrypt.hashSync(password, saltRounds),
+        isAdmin,
+      },
     })
-      .then((data) => {
+      .then(([user, created]) => {
         // sebenenrya chaining gini gak terlalu bagus sih, jadi sama kaya callback hell jatohnya,
         // tapi nanti kita bahas di chapter 7.
         UserGameBiodata.create({
-          userId: data.id,
+          userId: user.id,
           firstName,
           lastName,
           address,
