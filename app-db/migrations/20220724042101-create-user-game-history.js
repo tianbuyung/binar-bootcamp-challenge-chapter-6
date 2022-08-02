@@ -10,6 +10,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
+        unique: true,
       },
       user_id: {
         type: Sequelize.UUID,
@@ -18,6 +19,7 @@ module.exports = {
           key: "id",
           as: "userId",
         },
+        unique: true,
       },
       user_choice: {
         type: Sequelize.STRING,
