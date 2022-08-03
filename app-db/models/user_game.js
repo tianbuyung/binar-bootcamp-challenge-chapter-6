@@ -31,8 +31,6 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
         unique: true,
       },
-      // ini juga boleh dikasih validate username, gak boleh sama kasih aja validation harus unique. Kasih
-      // validate juga buat gak boleh kosong dan semacamnya, sama kek password. Tapi untuk tahap challenge ini udah bagus
       username: {
         allowNull: false,
         type: DataTypes.STRING,
@@ -45,7 +43,6 @@ module.exports = (sequelize, DataTypes) => {
           len: [8, 128],
         },
       },
-      // mungkin password bisa dikasih validation kek harus berapa gitu panjangnya
       isAdmin: {
         allowNull: false,
         type: DataTypes.BOOLEAN,
