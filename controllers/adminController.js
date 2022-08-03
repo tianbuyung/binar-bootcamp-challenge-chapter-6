@@ -76,7 +76,7 @@ class AdminController {
   async deleteUserById(req, res) {
     try {
       const id = req.params.id;
-      const user = await userService.userDeleteData(id);
+      await userService.userDeleteData(id);
       res.redirect("/admin");
     } catch (error) {
       res.render("pages/error", {

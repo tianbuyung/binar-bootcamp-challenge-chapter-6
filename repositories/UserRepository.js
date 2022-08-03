@@ -1,6 +1,5 @@
 const Model = require("../app-db/models");
 const { UserGame, UserGameBiodata, UserGameHistory } = Model;
-const encrypt = require("bcryptjs");
 
 class UserRepository {
   async findAndCountAll(query) {
@@ -33,7 +32,7 @@ class UserRepository {
       throw new Error(error.message);
     }
   }
-  async findOne(id) {
+  async findOneById(id) {
     try {
       let data = await UserGame.findOne({
         attributes: ["id", "username", "isAdmin", "createdAt", "updatedAt"],
@@ -58,6 +57,17 @@ class UserRepository {
       throw new Error(error.message);
     }
   }
+  async findOneByUsername(username) {
+    try {
+      let data = await UserGame.findOne({
+        attributes: ["username", "password", "isAdmin"],
+        where: { username: username },
+      });
+      return data;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
   async findOrCreate(payload) {
     try {
       let {
@@ -72,8 +82,6 @@ class UserRepository {
       } = payload;
       let data;
       let created;
-      const salt = await encrypt.genSalt(10);
-      password = await encrypt.hash(password, salt);
       [data, created] = await UserGame.findOrCreate({
         where: {
           username,
@@ -146,7 +154,7 @@ class UserRepository {
       });
       return "The data has been successfully deleted";
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error.message);
     }
   }
 }

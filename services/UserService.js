@@ -1,5 +1,6 @@
 const UserRepository = require("../repositories/UserRepository");
 const validator = require("validator");
+const encrypt = require("bcryptjs");
 
 const userRepository = new UserRepository();
 
@@ -14,7 +15,7 @@ class UserService {
   }
   async userFindOne(id) {
     try {
-      const user = await userRepository.findOne(id);
+      const user = await userRepository.findOneById(id);
       return user;
     } catch (error) {
       throw new Error(error.message);
@@ -22,7 +23,7 @@ class UserService {
   }
   async userFindOrCreate(payload) {
     try {
-      const { password } = payload;
+      let { password } = payload;
       let isStrongPassword = validator.isStrongPassword(password, {
         minLength: 8,
         minLowercase: 1,
@@ -38,7 +39,10 @@ class UserService {
         pointsForContainingSymbol: 10,
       });
       if (isStrongPassword) {
-        const user = await userRepository.findOrCreate(payload);
+        const salt = await encrypt.genSalt(10);
+        password = await encrypt.hash(password, salt);
+        let newPayload = { ...payload, password };
+        const user = await userRepository.findOrCreate(newPayload);
         return user;
       } else {
         throw new Error(
@@ -62,7 +66,46 @@ class UserService {
       const user = await userRepository.destroyData(id);
       return user;
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error.message);
+    }
+  }
+  async userRegister(payload) {
+    try {
+      const { password, confirmPassword } = payload;
+      if (password === confirmPassword) {
+        try {
+          await this.userFindOrCreate(payload);
+        } catch (error) {
+          throw new Error(error.message);
+        }
+      } else {
+        throw new Error("Password does not match");
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+  async userLogin(session, payload) {
+    try {
+      const { username, password } = payload;
+      if (!username || !password) {
+        throw new Error("Password/Username does not empty");
+      }
+      const user = await userRepository.findOneByUsername(username);
+      const isTruePassword = await encrypt.compare(password, user.password);
+      if (isTruePassword) {
+        if (user.isAdmin) {
+          session.username = user.username;
+          return true;
+        } else {
+          session.username = user.username;
+          return false;
+        }
+      } else {
+        throw new Error("Password does not match");
+      }
+    } catch (error) {
+      throw new Error(error.message);
     }
   }
 }
