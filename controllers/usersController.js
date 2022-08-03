@@ -4,7 +4,6 @@ const encrypt = require("bcryptjs");
 const saltRounds = 10;
 
 class UsersController {
-  constructor() {}
   getRegisterPage(req, res) {
     res.render("pages/user/register", { title: "Sign up", message: true });
   }

@@ -3,7 +3,6 @@ const { UserGame, UserGameBiodata, UserGameHistory } = Model;
 const encrypt = require("bcryptjs");
 
 class UserRepository {
-  constructor() {}
   async findAndCountAll(query) {
     try {
       let limit = Number(query.limit) || 5;
@@ -61,21 +60,35 @@ class UserRepository {
   }
   async findOrCreate(payload) {
     try {
-      let data = payload;
-      let password = data.password;
+      let {
+        username,
+        password,
+        firstName,
+        lastName,
+        address,
+        phoneNumber,
+        bio,
+        isAdmin,
+      } = payload;
+      let data;
       let created;
       const salt = await encrypt.genSalt(10);
       password = await encrypt.hash(password, salt);
       [data, created] = await UserGame.findOrCreate({
         where: {
-          username: data.username,
-          password: password,
-          isAdmin: data.isAdmin,
+          username,
+          password,
+          isAdmin,
         },
       });
       if (created) {
         await UserGameBiodata.create({
           userId: data.id,
+          firstName,
+          lastName,
+          address,
+          phoneNumber,
+          bio,
         });
         created = "Your account has been created!";
         return created;
@@ -88,7 +101,6 @@ class UserRepository {
     try {
       const {
         username,
-        password,
         firstName,
         lastName,
         address,
@@ -99,7 +111,6 @@ class UserRepository {
       await UserGame.update(
         {
           username,
-          password,
           isAdmin,
           updatedAt: new Date().getTime(),
         },
