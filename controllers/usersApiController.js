@@ -1,10 +1,7 @@
-const Model = require("../app-db/models");
-const { UserGame, UserGameBiodata, UserGameHistory } = Model;
 const UserService = require("../services/UserService");
 const userService = new UserService();
 
 class UsersApiController {
-  constructor() {}
   async createUserGame(req, res) {
     try {
       const payload = req.body;

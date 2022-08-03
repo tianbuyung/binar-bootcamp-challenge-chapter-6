@@ -15,22 +15,28 @@
                 <img src="../images/admin/profile-picture.png" class="card-img-top" alt="#">
                 <div class="card-body">
                     <h5 class="card-title text-center">
-                        <%= `${data.biodata.firstName} ${data.biodata.lastName}` %>
+                        <%= `${user.biodata.firstName} ${user.biodata.lastName}` %>
                     </h5>
+                    <h6 class="card-title text-center">
+                        <%= `${user.username}` %>
+                    </h6>
                     <p class="card-text">
-                        <%= data.biodata.bio %>
+                        <%= user.biodata.bio %>
                     </p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Phone Number: <%= data.biodata.phoneNumber %>
+                    <li class="list-group-item">Phone Number: <%= user.biodata.phoneNumber %>
                     </li>
-                    <li class="list-group-item">Address: <%= data.biodata.addres %>
+                    <li class="list-group-item">Address: <%= user.biodata.address %>
+                    </li>
+                    <li class="list-group-item text-center">
+                        <%= user.biodata.bio %>
                     </li>
                 </ul>
                 <div class="card-body text-center">
                     <a href="/admin" class="card-link">Dashboard</a>
-                    <a href="/admin/edit/<%= data.id %> " class="card-link">Edit</a>
-                    <a href="/admin/delete/<%= data.id %>" class="card-link">Delete</a>
+                    <a href="/admin/edit/<%= user.id %> " class="card-link">Edit</a>
+                    <a href="/admin/delete/<%= user.id %>" class="card-link">Delete</a>
                 </div>
             </div>
         </div>
