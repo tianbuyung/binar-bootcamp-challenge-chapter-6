@@ -1,4 +1,16 @@
 // 0 = rock, 1 = paper, 2 = scissors
+let checkChoice = (number) => {
+  switch (number) {
+    case 0:
+      return "rock";
+    case 1:
+      return "paper";
+    default:
+      return "scissors";
+  }
+};
+let userScore = 0;
+let comScore = 0;
 class Game {
   constructor(props) {
     // OOP Abstraction
@@ -90,12 +102,27 @@ class WhoIsWin extends Computer(User(Game)) {
     super(props);
   }
   whoIsWin(userChoiceValue, comChoiceValue) {
+    document.querySelector("#userFinalChoice").innerText =
+      checkChoice(userChoiceValue);
+    document.querySelector("#comFinalChoice").innerText =
+      checkChoice(comChoiceValue);
+    document
+      .querySelector("#inputUserFinalChoice")
+      .setAttribute("value", checkChoice(userChoiceValue));
+    document
+      .querySelector("#inputComFinalChoice")
+      .setAttribute("value", checkChoice(comChoiceValue));
     let theWinner;
+    let elementUserScore = document.querySelector(".userScore input");
+    let elementComScore = document.querySelector(".comScore input");
     const gameResult = document.getElementById("gameResult");
     if (userChoiceValue === comChoiceValue) {
+      elementUserScore.setAttribute("value", userScore);
+      elementComScore.setAttribute("value", comScore);
+      theWinner = "draw";
       return (
-        (theWinner = "draw"),
-        (gameResult.innerHTML = "draw"),
+        document.querySelector("#isWin").setAttribute("value", theWinner),
+        (gameResult.innerHTML = theWinner),
         gameResult.classList.remove("game-result", "result-win"),
         gameResult.classList.add("result-draw")
       );
@@ -104,18 +131,26 @@ class WhoIsWin extends Computer(User(Game)) {
       (userChoiceValue === 1 && comChoiceValue === 0) ||
       (userChoiceValue === 2 && comChoiceValue === 1)
     ) {
+      userScore++;
+      elementUserScore.setAttribute("value", userScore);
+      theWinner = "player 1 win";
       return (
-        (theWinner = "player 1 win"),
-        (gameResult.innerHTML = "player 1 win"),
+        document.querySelector("#isWin").setAttribute("value", theWinner),
+        (gameResult.innerHTML = theWinner),
         gameResult.classList.remove("game-result", "result-draw"),
-        gameResult.classList.add("result-win")
+        gameResult.classList.add("result-win"),
+        (document.querySelector("#userScore").innerText = userScore)
       );
     } else {
+      comScore++;
+      elementComScore.setAttribute("value", comScore);
+      theWinner = "com win";
       return (
-        (theWinner = "com win"),
-        (gameResult.innerHTML = "com win"),
+        document.querySelector("#isWin").setAttribute("value", theWinner),
+        (gameResult.innerHTML = theWinner),
         gameResult.classList.remove("game-result", "result-draw"),
-        gameResult.classList.add("result-win")
+        gameResult.classList.add("result-win"),
+        (document.querySelector("#comScore").innerText = comScore)
       );
     }
   }

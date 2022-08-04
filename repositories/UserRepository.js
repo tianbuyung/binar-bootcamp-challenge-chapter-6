@@ -32,10 +32,17 @@ class UserRepository {
       throw new Error(error.message);
     }
   }
-  async findOneById(id) {
+  async findOne(options) {
     try {
       let data = await UserGame.findOne({
-        attributes: ["id", "username", "isAdmin", "createdAt", "updatedAt"],
+        attributes: [
+          "id",
+          "username",
+          "password",
+          "isAdmin",
+          "createdAt",
+          "updatedAt",
+        ],
         include: [
           {
             model: UserGameBiodata,
@@ -50,18 +57,7 @@ class UserRepository {
             ],
           },
         ],
-        where: { id: id },
-      });
-      return data;
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  }
-  async findOneByUsername(username) {
-    try {
-      let data = await UserGame.findOne({
-        attributes: ["username", "password", "isAdmin"],
-        where: { username: username },
+        where: options,
       });
       return data;
     } catch (error) {
@@ -73,12 +69,12 @@ class UserRepository {
       let {
         username,
         password,
+        isAdmin,
         firstName,
         lastName,
         address,
         phoneNumber,
         bio,
-        isAdmin,
       } = payload;
       let data;
       let created;
@@ -109,12 +105,12 @@ class UserRepository {
     try {
       const {
         username,
+        isAdmin,
         firstName,
         lastName,
         address,
         phoneNumber,
         bio,
-        isAdmin,
       } = payload;
       await UserGame.update(
         {
