@@ -15,8 +15,17 @@ class UserService {
   }
   async userFindOne(id) {
     try {
-      const user = await userRepository.findOneById(id);
-      return user;
+      const options = { id: id };
+      let { username, isAdmin, createdAt, updatedAt, biodata } =
+        await userRepository.findOne(options);
+      return {
+        id,
+        username,
+        isAdmin,
+        createdAt,
+        updatedAt,
+        biodata,
+      };
     } catch (error) {
       throw new Error(error.message);
     }
@@ -91,7 +100,9 @@ class UserService {
       if (!username || !password) {
         throw new Error("Password/Username does not empty");
       }
-      const user = await userRepository.findOneByUsername(username);
+      const options = { username: username };
+      const user = await userRepository.findOne(options);
+      console.log(user);
       const isTruePassword = await encrypt.compare(password, user.password);
       if (isTruePassword) {
         if (user.isAdmin) {
