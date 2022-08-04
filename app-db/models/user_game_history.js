@@ -29,7 +29,22 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.UUID,
         field: "user_id",
-        unique: true,
+      },
+      userFinalChoice: {
+        type: DataTypes.STRING,
+        field: "user_choice",
+      },
+      userScore: {
+        type: DataTypes.STRING,
+        field: "user_score",
+      },
+      comFinalChoice: {
+        type: DataTypes.STRING,
+        field: "com_choice",
+      },
+      comScore: {
+        type: DataTypes.STRING,
+        field: "com_score",
       },
       isWin: { type: DataTypes.STRING, field: "is_win" },
       deletedAt: {

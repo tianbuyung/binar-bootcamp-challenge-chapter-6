@@ -102,7 +102,6 @@ class UserService {
       }
       const options = { username: username };
       const user = await userRepository.findOne(options);
-      console.log(user);
       const isTruePassword = await encrypt.compare(password, user.password);
       if (isTruePassword) {
         if (user.isAdmin) {

@@ -16,12 +16,17 @@ module.exports = {
           key: "id",
           as: "userId",
         },
-        unique: true,
       },
       user_choice: {
         type: Sequelize.STRING,
       },
+      user_score: {
+        type: Sequelize.STRING,
+      },
       com_choice: {
+        type: Sequelize.STRING,
+      },
+      com_score: {
         type: Sequelize.STRING,
       },
       is_win: {

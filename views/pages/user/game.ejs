@@ -31,52 +31,85 @@
         </div>
     </header>
     <main>
-        <div class="container pt-3">
-            <div class="row">
-                <div class="col d-flex align-items-center flex-column">
-                    <h3 class="text-uppercase pb-3 identity">
-                        <%= user %>
-                    </h3>
-                    <div class="d-flex flex-column" id="userChoice">
-                        <div class="d-flex align-items-center justify-content-center p-3 m-3 selections" id="userRock">
-                            <img src="../images/game/batu.png" class="rock-selected" alt="rock">
+        <form action="/game" method="POST" onclick="">
+            <div class="container pt-3">
+                <div class="row">
+                    <div class="col d-flex align-items-center flex-column">
+                        <h3 class="text-uppercase pb-3 identity">
+                            <%= user %>
+                        </h3>
+                        <div class="d-flex flex-column" id="userChoice">
+                            <div class="d-flex align-items-center justify-content-center p-3 m-3 selections"
+                                id="userRock">
+                                <img src="../images/game/batu.png" class="rock-selected" alt="rock">
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center p-3 m-3 selections"
+                                id="userPaper">
+                                <img src="../images/game/kertas.png" class="paper-selected" alt="paper">
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center p-3 m-3 selections"
+                                id="userScissors">
+                                <img src="../images/game/gunting.png" class="scissors-selected" alt="scissors">
+                            </div>
                         </div>
-                        <div class="d-flex align-items-center justify-content-center p-3 m-3 selections" id="userPaper">
-                            <img src="../images/game/kertas.png" class="paper-selected" alt="paper">
+                    </div>
+                    <div class="col align-items-center justify-content-center position-relative">
+                        <div class="align-self-center position-absolute top-50 start-50 translate-middle">
+                            <p class="game-result" id="gameResult">vs</p>
+                            <input id="isWin" type="text" name="isWin" value="" style="display: none;">
                         </div>
-                        <div class="d-flex align-items-center justify-content-center p-3 m-3 selections"
-                            id="userScissors">
-                            <img src="../images/game/gunting.png" class="scissors-selected" alt="scissors">
+                    </div>
+                    <div class="col d-flex align-items-center flex-column">
+                        <h3 class="text-uppercase pb-3 identity">com</h3>
+                        <div class="d-flex flex-column" id="comChoice">
+                            <div class="d-flex align-items-center justify-content-center p-3 m-3" id="comRock">
+                                <img src="../images/game/batu.png" class="rock-selected" alt="rock">
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center p-3 m-3" id="comPaper">
+                                <img src="../images/game/kertas.png" class="paper-selected" alt="paper">
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center p-3 m-3" id="comScissors">
+                                <img src="../images/game/gunting.png" class="scissors-selected" alt="scissors">
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col align-items-center justify-content-center position-relative">
-                    <div class="align-self-center position-absolute top-50 start-50 translate-middle">
-                        <p class="game-result" id="gameResult">vs</p>
+                <div class="row text-uppercase">
+                    <div class="userScore">
+                        <h3>Score</h3>
+                        <p>
+                            <%= user %>:
+                                <span id="userScore">0
+                                </span>
+                                <input id="inputUserScore" type="text" name="userScore" value="0"
+                                    style="display: none;">
+                        </p>
+                        <p id="userFinalChoice"></p>
+                        <input id="inputUserFinalChoice" type="text" name="userFinalChoice" value=""
+                            style="display: none;">
+                    </div>
+                    <p>vs</p>
+                    <div class="comScore">
+                        <p>com:
+                            <span id="comScore">0
+                            </span>
+                            <input id="inputComScore" type="text" name="comScore" value="0" style="display: none;">
+                        </p>
+                        <p id="comFinalChoice"></p>
+                        <input id="inputComFinalChoice" type="text" name="comFinalChoice" value=""
+                            style="display: none;">
                     </div>
                 </div>
-                <div class="col d-flex align-items-center flex-column">
-                    <h3 class="text-uppercase pb-3 identity">com</h3>
-                    <div class="d-flex flex-column" id="comChoice">
-                        <div class="d-flex align-items-center justify-content-center p-3 m-3" id="comRock">
-                            <img src="../images/game/batu.png" class="rock-selected" alt="rock">
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center p-3 m-3" id="comPaper">
-                            <img src="../images/game/kertas.png" class="paper-selected" alt="paper">
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center p-3 m-3" id="comScissors">
-                            <img src="../images/game/gunting.png" class="scissors-selected" alt="scissors">
-                        </div>
+                <div class="row">
+                    <div class="d-flex align-items-center justify-content-center selections">
+                        <button type="submit">
+                            <img src="../images/game/refresh.png" class="img-fluid refresh-button" alt="refresh"
+                                id="refreshButton">
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="d-flex align-items-center justify-content-center selections">
-                    <img src="../images/game/refresh.png" class="img-fluid refresh-button" alt="refresh"
-                        id="refreshButton">
-                </div>
-            </div>
-        </div>
+        </form>
     </main>
 
     <!-- General Javascript -->
