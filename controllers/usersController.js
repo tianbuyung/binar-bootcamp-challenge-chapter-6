@@ -9,38 +9,36 @@ class UsersController {
     res.render("pages/user/login", { title: "Sign in", message: true });
   }
   async createNewUser(req, res) {
-    try {
-      const payload = req.body;
-      await userService.userRegister(payload);
-      res.redirect("/users/login");
-    } catch (error) {
+    const payload = req.body;
+    const [err, user] = await userService.userRegister(payload);
+    if (err) {
       res.render("pages/user/register", {
         title: "Sign up",
-        message: error.message,
+        message: err,
         messageClass: "alert-danger",
       });
+    } else {
+      res.redirect("/users/login");
     }
   }
   async loginUser(req, res) {
-    try {
-      const session = req.session;
-      const payload = req.body;
-      const user = await userService.userLogin(session, payload);
-      if (user) {
-        res.redirect("/admin");
-      } else {
-        res.redirect("/game");
-      }
-    } catch (error) {
+    const session = req.session;
+    const payload = req.body;
+    const [err, user] = await userService.userLogin(session, payload);
+    if (err) {
       res.render("pages/user/login", {
         title: "Sign in",
-        message: error.message,
+        message: err,
         messageClass: "alert-danger",
       });
+    } else {
+      res.cookie("token", user);
+      res.redirect("/admin");
     }
   }
   logoutUser(req, res) {
     req.session.destroy();
+    res.clearCookie("token");
     res.redirect("/");
   }
 }

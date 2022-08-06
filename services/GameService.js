@@ -7,8 +7,11 @@ const gameRepository = new GameRepository();
 class GameService {
   async storeGameData(payload) {
     try {
-      const options = payload.username;
-      let user = await userRepository.findOne(options);
+      const options = {
+        attributes: ["id"],
+        where: { username: payload.user },
+      };
+      let [err, user] = await userRepository.findOne(options);
       let userId = user.id;
       let newPayload = { ...payload, userId };
       const storeGameData = await gameRepository.storeGameData(newPayload);
