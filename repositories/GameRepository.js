@@ -3,6 +3,7 @@ const { UserGame, UserGameBiodata, UserGameHistory } = Model;
 
 class GameRepository {
   async storeGameData(payload) {
+    let err = null;
     try {
       let {
         userId,
@@ -21,9 +22,27 @@ class GameRepository {
         isWin,
       });
       stored = "Your data has been stored!";
-      return stored;
+      return [err, stored];
     } catch (error) {
-      throw new Error(error.message);
+      err = error;
+      return [err, null];
+    }
+  }
+  async getGameData(payload) {
+    let result = [];
+    let err = null;
+    try {
+      const sumUserScore = await UserGameHistory.sum("userScore", {
+        where: { userId: payload },
+      });
+      const sumComScore = await UserGameHistory.sum("comScore", {
+        where: { userId: payload },
+      });
+      result.push(sumUserScore, sumComScore);
+      return [err, result];
+    } catch (error) {
+      err = error;
+      return [err, null];
     }
   }
 }

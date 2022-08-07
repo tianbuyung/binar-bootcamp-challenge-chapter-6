@@ -3,15 +3,17 @@ var router = express.Router();
 const UserGame = require("../controllers/usersApiController");
 const userGame = new UserGame();
 
+const userAuth = require("../middleware/authentication");
+
 /* Create a new user. */
-router.post("/", userGame.createUserGame);
+router.post("/", userAuth, userGame.createUserGame);
 /* GET users listing. */
-router.get("/", userGame.getAllUsers);
+router.get("/", userAuth, userGame.getAllUsers);
 /* GET a user listing by ID. */
-router.get("/:id", userGame.getUserById);
+router.get("/:id", userAuth, userGame.getUserById);
 /* Edit users by ID. */
-router.put("/:id", userGame.updateUserById);
+router.put("/:id", userAuth, userGame.updateUserById);
 /* Delete users by ID. */
-router.delete("/:id", userGame.deleteUserById);
+router.delete("/:id", userAuth, userGame.deleteUserById);
 
 module.exports = router;

@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         field: "user_choice",
       },
       userScore: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         field: "user_score",
       },
       comFinalChoice: {
@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         field: "com_choice",
       },
       comScore: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         field: "com_score",
       },
       isWin: { type: DataTypes.STRING, field: "is_win" },

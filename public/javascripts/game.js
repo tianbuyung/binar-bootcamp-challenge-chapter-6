@@ -102,10 +102,6 @@ class WhoIsWin extends Computer(User(Game)) {
     super(props);
   }
   whoIsWin(userChoiceValue, comChoiceValue) {
-    document.querySelector("#userFinalChoice").innerText =
-      checkChoice(userChoiceValue);
-    document.querySelector("#comFinalChoice").innerText =
-      checkChoice(comChoiceValue);
     document
       .querySelector("#inputUserFinalChoice")
       .setAttribute("value", checkChoice(userChoiceValue));
@@ -138,8 +134,8 @@ class WhoIsWin extends Computer(User(Game)) {
         document.querySelector("#isWin").setAttribute("value", theWinner),
         (gameResult.innerHTML = theWinner),
         gameResult.classList.remove("game-result", "result-draw"),
-        gameResult.classList.add("result-win"),
-        (document.querySelector("#userScore").innerText = userScore)
+        gameResult.classList.add("result-win")
+        // (document.querySelector("#userScore").innerText = userScore)
       );
     } else {
       comScore++;
@@ -149,8 +145,8 @@ class WhoIsWin extends Computer(User(Game)) {
         document.querySelector("#isWin").setAttribute("value", theWinner),
         (gameResult.innerHTML = theWinner),
         gameResult.classList.remove("game-result", "result-draw"),
-        gameResult.classList.add("result-win"),
-        (document.querySelector("#comScore").innerText = comScore)
+        gameResult.classList.add("result-win")
+        // (document.querySelector("#comScore").innerText = comScore)
       );
     }
   }

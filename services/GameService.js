@@ -6,16 +6,20 @@ const gameRepository = new GameRepository();
 
 class GameService {
   async storeGameData(payload) {
-    try {
-      const options = payload.username;
-      let user = await userRepository.findOne(options);
-      let userId = user.id;
-      let newPayload = { ...payload, userId };
-      const storeGameData = await gameRepository.storeGameData(newPayload);
-      return storeGameData;
-    } catch (error) {
-      throw new Error(error.message);
+    const options = {
+      attributes: ["id"],
+      where: { username: payload.user },
+    };
+    let [err, user] = await userRepository.findOne(options);
+    if (err) {
+      return [err, null];
     }
+    let userId = user.id;
+    let newPayload = { ...payload, userId };
+    return await gameRepository.storeGameData(newPayload);
+  }
+  async getGameData(payload) {
+    return await gameRepository.getGameData(payload);
   }
 }
 

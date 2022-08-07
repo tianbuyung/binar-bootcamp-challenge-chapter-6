@@ -1,121 +1,153 @@
-const UserRepository = require("../repositories/UserRepository");
 const validator = require("validator");
 const encrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
+const UserRepository = require("../repositories/UserRepository");
+const Model = require("../app-db/models");
 
 const userRepository = new UserRepository();
+const { UserGame, UserGameBiodata, UserGameHistory } = Model;
+
+const secretKey = process.env.JWT_SECRET_KEY || "Secret_Key";
 
 class UserService {
   async usersFindAndCountAll(query) {
-    try {
-      const [users, limit, page] = await userRepository.findAndCountAll(query);
-      return [users, limit, page];
-    } catch (error) {
-      throw new Error(error.message);
-    }
+    const limit = Number(query.limit) || 5;
+    const page = Number(query.page) || 1;
+    const offset = (page - 1) * limit;
+    const options = {
+      order: ["id"],
+      limit,
+      offset,
+      attributes: ["id", "username", "isAdmin", "createdAt", "updatedAt"],
+      include: [
+        {
+          model: UserGameBiodata,
+          as: "biodata",
+          attributes: [
+            "userId",
+            "firstName",
+            "lastName",
+            "address",
+            "phoneNumber",
+            "bio",
+          ],
+        },
+      ],
+    };
+    const users = await userRepository.findAndCountAll(options);
+    return [users, limit, page];
   }
   async userFindOne(id) {
-    try {
-      const options = { id: id };
-      let { username, isAdmin, createdAt, updatedAt, biodata } =
-        await userRepository.findOne(options);
-      return {
-        id,
-        username,
-        isAdmin,
-        createdAt,
-        updatedAt,
-        biodata,
-      };
-    } catch (error) {
-      throw new Error(error.message);
-    }
+    const options = {
+      attributes: ["id", "username", "isAdmin", "createdAt", "updatedAt"],
+      include: [
+        {
+          model: UserGameBiodata,
+          as: "biodata",
+          attributes: [
+            "userId",
+            "firstName",
+            "lastName",
+            "address",
+            "phoneNumber",
+            "bio",
+          ],
+        },
+      ],
+      where: { id: id },
+    };
+    return await userRepository.findOne(options);
   }
   async userFindOrCreate(payload) {
-    try {
-      let { password } = payload;
-      let isStrongPassword = validator.isStrongPassword(password, {
-        minLength: 8,
-        minLowercase: 1,
-        minUppercase: 1,
-        minNumbers: 1,
-        minSymbols: 1,
-        returnScore: false,
-        pointsPerUnique: 1,
-        pointsPerRepeat: 0.5,
-        pointsForContainingLower: 10,
-        pointsForContainingUpper: 10,
-        pointsForContainingNumber: 10,
-        pointsForContainingSymbol: 10,
-      });
-      if (isStrongPassword) {
-        const salt = await encrypt.genSalt(10);
-        password = await encrypt.hash(password, salt);
-        let newPayload = { ...payload, password };
-        const user = await userRepository.findOrCreate(newPayload);
-        return user;
-      } else {
-        throw new Error(
-          "Password is weak, Password must contain minimum 1 letter, 1 number, 1 symbol, 1 lowercase, 1 uppercase and lenght more than 8 characters"
-        );
-      }
-    } catch (error) {
-      throw new Error(error.message);
+    let { password } = payload;
+    let isStrongPassword = validator.isStrongPassword(password, {
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+      returnScore: false,
+      pointsPerUnique: 1,
+      pointsPerRepeat: 0.5,
+      pointsForContainingLower: 10,
+      pointsForContainingUpper: 10,
+      pointsForContainingNumber: 10,
+      pointsForContainingSymbol: 10,
+    });
+    if (isStrongPassword) {
+      const salt = await encrypt.genSalt(10);
+      password = await encrypt.hash(password, salt);
+      let newPayload = { ...payload, password };
+      return await userRepository.findOrCreate(newPayload);
+    } else {
+      let err =
+        "Password is weak, Password must contain minimum 1 letter, 1 number, 1 symbol, 1 lowercase, 1 uppercase and lenght more than 8 characters";
+      return [err, null];
     }
   }
   async userUpdateData(id, payload) {
-    try {
-      const user = await userRepository.updateData(id, payload);
-      return user;
-    } catch (error) {
-      throw new Error(error.message);
-    }
+    return await userRepository.updateData(id, payload);
   }
   async userDeleteData(id) {
-    try {
-      const user = await userRepository.destroyData(id);
-      return user;
-    } catch (error) {
-      throw new Error(error.message);
-    }
+    return await userRepository.destroyData(id);
   }
   async userRegister(payload) {
-    try {
-      const { password, confirmPassword } = payload;
-      if (password === confirmPassword) {
-        try {
-          await this.userFindOrCreate(payload);
-        } catch (error) {
-          throw new Error(error.message);
-        }
-      } else {
-        throw new Error("Password does not match");
-      }
-    } catch (error) {
-      throw new Error(error.message);
+    let err = null;
+    const { username, password, confirmPassword } = payload;
+    if (!username || !password) {
+      err = "Password/Username does not empty";
+      return [err, null];
+    }
+    if (password === confirmPassword) {
+      return await this.userFindOrCreate(payload);
+    } else {
+      err = "Password does not match";
+      return [err, null];
     }
   }
   async userLogin(session, payload) {
-    try {
-      const { username, password } = payload;
-      if (!username || !password) {
-        throw new Error("Password/Username does not empty");
-      }
-      const options = { username: username };
-      const user = await userRepository.findOne(options);
-      const isTruePassword = await encrypt.compare(password, user.password);
+    let err = null;
+    const { username, password } = payload;
+    if (!username || !password) {
+      err = "Password/Username does not empty";
+      return [err, null];
+    }
+    const options = {
+      attributes: ["id", "username", "password", "isAdmin"],
+      where: { username: username },
+    };
+    let [error, isUserFound] = await userRepository.findOne(options);
+    if (error) {
+      return [error, null];
+    }
+    if (isUserFound) {
+      const isTruePassword = await encrypt.compare(
+        password,
+        isUserFound.password
+      );
       if (isTruePassword) {
-        if (user.isAdmin) {
-          session.username = user.username;
-          return true;
-        } else {
-          session.username = user.username;
-          return false;
+        try {
+          let token = jwt.sign(
+            {
+              id: isUserFound.id,
+              username: isUserFound.username,
+              isAdmin: isUserFound.isAdmin,
+            },
+            secretKey,
+            { expiresIn: 60 * 60 }
+          );
+          return [err, token];
+        } catch (error) {
+          return [error, null];
         }
       } else {
-        throw new Error("Password does not match");
+        err = "Password does not match";
+        return [err, null];
       }
-    } catch (error) {
-      throw new Error(error.message);
+    } else {
+      err = "User is not found";
+      return [err, null];
     }
   }
 }

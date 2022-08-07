@@ -2,69 +2,33 @@ const Model = require("../app-db/models");
 const { UserGame, UserGameBiodata, UserGameHistory } = Model;
 
 class UserRepository {
-  async findAndCountAll(query) {
+  async findAndCountAll(options) {
+    let err = null;
     try {
-      let limit = Number(query.limit) || 5;
-      let page = Number(query.page) || 1;
-      let offset = (page - 1) * limit;
-      let data = await UserGame.findAndCountAll({
-        order: ["id"],
-        limit,
-        offset,
-        attributes: ["id", "username", "isAdmin", "createdAt", "updatedAt"],
-        include: [
-          {
-            model: UserGameBiodata,
-            as: "biodata",
-            attributes: [
-              "userId",
-              "firstName",
-              "lastName",
-              "address",
-              "phoneNumber",
-              "bio",
-            ],
-          },
-        ],
-      });
-      return [data, limit, page];
+      const data = await UserGame.findAndCountAll(options);
+      return [err, data];
     } catch (error) {
-      throw new Error(error.message);
+      err = error;
+      return [err, null];
     }
   }
   async findOne(options) {
+    let err = null;
     try {
-      let data = await UserGame.findOne({
-        attributes: [
-          "id",
-          "username",
-          "password",
-          "isAdmin",
-          "createdAt",
-          "updatedAt",
-        ],
-        include: [
-          {
-            model: UserGameBiodata,
-            as: "biodata",
-            attributes: [
-              "userId",
-              "firstName",
-              "lastName",
-              "address",
-              "phoneNumber",
-              "bio",
-            ],
-          },
-        ],
-        where: options,
-      });
-      return data;
+      let data = await UserGame.findOne(options);
+      if (data) {
+        return [err, data];
+      } else {
+        err = "Data not found";
+        return [err, null];
+      }
     } catch (error) {
-      throw new Error(error.message);
+      err = error;
+      return [err, null];
     }
   }
   async findOrCreate(payload) {
+    let err = null;
     try {
       let {
         username,
@@ -95,13 +59,15 @@ class UserRepository {
           bio,
         });
         created = "Your account has been created!";
-        return created;
+        return [err, created];
       }
     } catch (error) {
-      throw new Error("The username is already exist!");
+      err = "The username is already exist!";
+      return [err, null];
     }
   }
   async updateData(id, payload) {
+    let err = null;
     try {
       const {
         username,
@@ -131,12 +97,14 @@ class UserRepository {
         },
         { where: { userId: id } }
       );
-      return "The data has been successfully updated";
+      return [err, "The data has been successfully updated"];
     } catch (error) {
-      throw new Error("The username is already exist!");
+      err = error;
+      return [err, null];
     }
   }
   async destroyData(id) {
+    let err = null;
     try {
       await UserGame.destroy({
         where: {
@@ -148,9 +116,10 @@ class UserRepository {
           userId: id,
         },
       });
-      return "The data has been successfully deleted";
+      return [err, "The data has been successfully deleted"];
     } catch (error) {
-      throw new Error(error.message);
+      err = error;
+      return [err, null];
     }
   }
 }

@@ -21,13 +21,13 @@ module.exports = {
         type: Sequelize.STRING,
       },
       user_score: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       com_choice: {
         type: Sequelize.STRING,
       },
       com_score: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       is_win: {
         type: Sequelize.STRING,

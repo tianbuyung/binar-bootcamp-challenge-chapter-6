@@ -24,7 +24,7 @@ const app = express();
 //session middleware
 app.use(
   sessions({
-    secret: process.env.SECRET_SESSION || "thisismysecretkey",
+    secret: process.env.SESSION_SECRET_KEY || "thisismysecretkey",
     saveUninitialized: true,
     cookie: { maxAge: oneDay },
     resave: false,

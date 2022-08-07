@@ -4,11 +4,11 @@ const router = express.Router();
 const GameController = require("../controllers/gameController");
 const gameController = new GameController();
 
-const gameAuth = require("../middleware/authentication");
+const userAuth = require("../middleware/authentication");
 
 /* GET game page. */
-router.get("/", gameAuth, gameController.getGamePage);
+router.get("/", userAuth, gameController.getGamePage);
 /* POST game result. */
-router.post("/", gameAuth, gameController.storeGame);
+router.post("/", userAuth, gameController.storeGame);
 
 module.exports = router;
